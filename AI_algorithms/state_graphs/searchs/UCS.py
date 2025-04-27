@@ -1,0 +1,44 @@
+from ..graph import Graph
+import heapq
+
+def UCSearch(G: Graph,start,end, criteria = None, verbose = False, reached = True):
+    """
+    Uniform Cost Search algorithm to find a path from start to end node in a graph.
+    The graph must be defined with a sort criteria.
+    
+    Parameters:
+        G (Graph): The graph to search in.
+        start (str): The starting node.
+        end (str): The ending node.
+        criteria (str): The criteria to sort the graph. Default is None.
+        verbose (bool): If True, prints the search process. Default is False.
+        reached (bool): If True, only new nodes are added to the queue. Default is True.
+        
+    Returns:
+        list: A list of nodes representing the path from start to end node.
+        None if no path is found.
+    """
+
+    assert G.contains(start) and G.contains(end) , "Start or end node not in graph"
+    assert G.defineSortCriteria(option = criteria) , "Sort criteria not defined"
+
+    pq = []
+    out = []
+    heapq.heappush(pq,(0,(start , [start])))
+    reached_ =  set([start])
+    while len(pq) > 0:
+        cost ,(cur,path) = heapq.heappop(pq)
+        out.append(cur)
+        if verbose: print(f'Out: {cur} g: {cost:<3}')
+        if cur == end:
+            if verbose: print(f'\nOut order: {" ".join(out)}')
+            return path
+        for node in G.adj(cur):
+            if reached:
+                if node not in reached_:
+                   heapq.heappush(pq,(cost + G.cost(cur,node),(node , path + [node])))
+                   reached_.add(node)
+            else:
+               heapq.heappush(pq,(cost + G.cost(cur,node),(node , path + [node])))
+    if verbose: print(f'\nOut order: {" ".join(out)}')
+    return None
