@@ -1,5 +1,51 @@
 import networkx as nx # type: ignore
 import matplotlib.pyplot as plt
+import re
+
+def parse_input(input_str):
+    '''
+    Parses the input string to extract the costed edges and heuristics.
+    The input format is expected to be:
+    node (h = \\d): (pairs , cost)
+    where pairs are in the format (node, cost).
+    Example:
+    A (h = 2): (B, 1), (C, 2)
+    B (h = 1): (D, 2), (E, 3)
+    C (h = 0): (D, 1), (E, 2)
+    D (h = 0): (F, 1)
+    E (h = 0): (F, 2)
+    F (h = 0): ()
+
+    Arguments:
+        input_str: str -- The input string containing the graph information.
+    
+    Returns:
+        costed_edges: dict -- A dictionary of edges with their costs {(a,b): cost}.
+        
+        heuristics: dict -- A dictionary of nodes with their heuristics {node: heuristic}.
+    '''
+    lines = input_str.strip().split('\n')
+    costed_edges = {}
+    heuristics = {}
+
+    for line in lines:
+        line = line.strip()
+        line = line.split(':')
+        assert len(line) == 2, "Invalid input format. Expected 'node (h = \\d): (pairs , cost)'."
+        #Heuristics
+        node = line[0].strip()
+        found = re.search(r'(.+)\(h\s*=\s*(\d+)\)', node)
+        assert found, "Invalid input format. Expected 'node (h = \\d)'."
+        node , h = found.groups()
+        heuristics[node] = int(h)
+        #Edges
+        edges = line[1].strip()
+        found = re.findall(r'\(\s*(\w+)\s*,\s*(\d+)\s*\)', edges)
+        for edge in found:
+            a, cost = edge
+            cost = int(cost)
+            costed_edges[(node, a)] = cost
+    return costed_edges, heuristics
 
 class Graph:
     def __init__(self,costed_edges,heuristics):
