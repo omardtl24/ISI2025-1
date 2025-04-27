@@ -1,6 +1,6 @@
 #Udea courses grader data
-*/local
+**/local
 /Laboratorios/init.py
 
 #Python cache
-*/__pycache__/
+**/__pycache__/
