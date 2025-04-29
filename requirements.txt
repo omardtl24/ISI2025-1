@@ -59,7 +59,7 @@ nest-asyncio==1.6.0
 networkx==3.4.2
 notebook==7.4.1
 notebook_shim==0.2.4
-numpy==2.2.5
+numpy==1.26.4
 overrides==7.7.0
 packaging==25.0
 pandas==2.2.3
@@ -68,6 +68,7 @@ parso==0.8.4
 pexpect==4.9.0
 pillow==11.2.1
 platformdirs==4.3.7
+progressbar2==4.5.0
 prometheus_client==0.21.1
 prompt_toolkit==3.0.51
 psutil==7.0.0
@@ -78,6 +79,7 @@ Pygments==2.19.1
 pyparsing==3.2.3
 python-dateutil==2.9.0.post0
 python-json-logger==3.3.0
+python-utils==3.9.1
 pytz==2025.2
 PyYAML==6.0.2
 pyzmq==26.4.0
@@ -85,6 +87,7 @@ referencing==0.36.2
 requests==2.32.3
 rfc3339-validator==0.1.4
 rfc3986-validator==0.1.1
+rlxutils==0.1.10
 rpds-py==0.24.0
 scikit-learn==1.6.1
 scipy==1.15.2
