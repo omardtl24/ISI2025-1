@@ -99,7 +99,7 @@ class GradientDescentSupervisedModel(SupervisedModel):
                 else: delta += self.grad(X[j], y[j])
             self.update_params(delta, lr=lr)
             losses.append(self.loss(X,y))
-            if verbose: print(f"Epoch {i+1}/{epochs}, Loss: {losses[-1]}")
+            if verbose: print( f"Epoch {i+1}/{epochs}, Loss: {losses[-1]}")
         return losses
     
     def stochastic_gd(self, X , y , lr=0.01, epochs=100, verbose=False, random_state=42):
