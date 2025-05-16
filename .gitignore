@@ -8,5 +8,9 @@
 #Python environment
 **/ISI-venv/
 
-#CSV files
+#Files
+**/*.zip
 **/*.csv
+
+#Environment variables
+**/.env
