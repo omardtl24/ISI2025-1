@@ -7,3 +7,14 @@
 
 #Python environment
 **/ISI-venv/
+
+#Files
+**/*.zip
+**/*.csv
+
+#Environment variables
+**/.env
+
+#Kaggle credentials
+**/kaggle.json
+**/kaggle/
