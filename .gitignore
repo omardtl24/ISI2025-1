@@ -14,3 +14,7 @@
 
 #Environment variables
 **/.env
+
+#Kaggle credentials
+**/kaggle.json
+**/kaggle/
