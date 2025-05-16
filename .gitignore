@@ -7,3 +7,6 @@
 
 #Python environment
 **/ISI-venv/
+
+#CSV files
+**/*.csv
