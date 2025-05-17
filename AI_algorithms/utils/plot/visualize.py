@@ -26,7 +26,7 @@ def plot_data(X, y, title = "Data"):
     pl.legend(loc="best")
     pl.title(title)
 
-def plot_decision_region(X, pred_fun):
+def plot_decision_region(X, pred_fun, vmin=-2, vmax=2):
     """
     X: corresponde a las instancias de nuestro conjunto de datos
     pred_fun: es una función que para cada valor de X, me regresa una predicción
@@ -47,7 +47,7 @@ def plot_decision_region(X, pred_fun):
     for i in range(grid_r):
         for j in range(grid_c):
             ZZ[i, j] = pred_fun(XX[i, j], YY[i, j])
-    pl.contourf(XX, YY, ZZ, 30, cmap = pl.cm.coolwarm, vmin= -2, vmax=2)
+    pl.contourf(XX, YY, ZZ, 30, cmap = pl.cm.coolwarm, vmin=vmin, vmax=vmax)
     pl.colorbar()
     pl.xlabel("x")
     pl.ylabel("y")
