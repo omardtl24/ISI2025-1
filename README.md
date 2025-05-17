@@ -11,6 +11,40 @@ El repositorio se encuentra organizado por el tipo de actividad, e incluye:
 - 📄 Códigos auxiliares
 - 🤖 Proyecto
 
+## 📁 Estructura del repositorio
+
+El repositorio está organizado en las siguientes carpetas principales:
+
+- `AI_algorithms/`: Implementaciones de algoritmos de inteligencia artificial, incluyendo módulos de aprendizaje supervisado, no supervisado y utilidades para gráficos y manejo de grafos de estados.
+- `Laboratorios/`: Notebooks de laboratorio donde se desarrollan ejercicios prácticos de temas como Python, Numpy, Pandas, limpieza y construcción de datos, generación de modelos y series de tiempo, entre otros. También contiene datasets de ejemplo.
+- `Practicas/`: Notebooks de prácticas asíncronas para reforzar conceptos vistos en clase y en los laboratorios.
+- `Repaso Quices/`: Notebooks de repaso y preparación para quices.
+- `utils/`: Utilidades y funciones auxiliares usadas en los laboratorios y prácticas.
+
+## 🐍 Entorno virtual y dependencias
+
+Es fundamental trabajar en un entorno virtual para evitar conflictos de dependencias y asegurar la reproducibilidad. Puedes crear un entorno virtual con:
+
+```bash
+python3 -m venv ISI-venv
+source ISI-venv/bin/activate
+pip install -r requirements.txt
+```
+
+El archivo `requirements.txt` contiene todos los paquetes necesarios para el curso. Los principales paquetes utilizados son:
+
+- **numpy** y **scipy**: Manipulación eficiente de arreglos y operaciones matemáticas avanzadas.
+- **pandas**: Manejo y análisis de datos tabulares.
+- **matplotlib** y **seaborn**: Visualización de datos y gráficos estadísticos.
+- **scikit-learn**: Algoritmos de machine learning y herramientas de modelado.
+- **kaggle**: Descarga de datasets y participación en competencias desde notebooks.
+- **jupyter** y **notebook**: Ejecución interactiva de notebooks.
+- **python-dotenv**: Manejo de variables de entorno para credenciales y configuraciones.
+
+Estos paquetes permiten realizar desde análisis y limpieza de datos, hasta la implementación y evaluación de modelos de machine learning, así como la visualización y documentación interactiva de los resultados.
+
+> Recuerda activar siempre tu entorno virtual antes de trabajar y asegurarte de tener instaladas las dependencias con `pip install -r requirements.txt`.
+
 ## 🔑 Configuración de variables de entorno para Kaggle
 
 Algunos laboratorios requieren acceso a la API de Kaggle para descargar datasets. Para esto, debes configurar una variable de entorno con la ruta a tu archivo `kaggle.json` (tu credencial secreta de Kaggle).
