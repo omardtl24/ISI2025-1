@@ -66,6 +66,11 @@ class GaussianNB:
                         probs = (full_counts + 1) / (full_counts.sum() + len(self.classes))
                     elif correction == 'm-estimate':
                         probs = (full_counts + m * self.priors[c]) / (full_counts.sum() + m)
+                    else:
+                        raise ValueError(
+                            f"Unsupported correction method '{correction}'. "
+                            "Valid options are None, 'laplace', or 'm-estimate'."
+                        )
                     self.discrete_probs[(c_i, i)] = dict(zip(expected_values, probs))
                 else:
                     # Continuous feature — GaussianNB logic
