@@ -97,7 +97,7 @@ class GaussianNB:
         for c_i in range(len(self.classes)):
             for i in range(len(self.features)):
                 if i in self.discrete:
-                    posteriors[c_i] *= self.discrete_probs[(c_i, i)][x[i]]
+                    posteriors[c_i] *= self.discrete_probs[(c_i, i)].get(x[i], self.discrete_probs[(c_i, i)]['default'])
                 else:
                     mean = self.params[(c_i, i)]['mean']
                     var = self.params[(c_i, i)]['var']
