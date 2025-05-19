@@ -94,8 +94,8 @@ class GaussianNB:
                 if i in self.discrete:
                     posteriors[c_i] *= self.discrete_probs[(c_i, i)][x[i]]
                 else:
-                    mean = self.params[i]['mean']
-                    var = self.params[i]['var']
+                    mean = self.params[(c_i, i)]['mean']
+                    var = self.params[(c_i, i)]['var']
                     posteriors[c_i] *= norm.pdf(x[i], loc = mean, scale = np.sqrt(var))
         return posteriors / np.sum(posteriors)
 
