@@ -65,7 +65,7 @@ class GaussianNB:
                     elif correction == 'laplace':
                         probs = (full_counts + 1) / (full_counts.sum() + len(expected_values))
                     elif correction == 'm-estimate':
-                        probs = (full_counts + m * self.priors[c]) / (full_counts.sum() + m)
+                        probs = (full_counts + m * self.priors[c_i]) / (full_counts.sum() + m)
                     else:
                         raise ValueError(
                             f"Unsupported correction method '{correction}'. "
