@@ -22,7 +22,7 @@ class GaussianNB:
            y: array-like, shape (n_samples,)
                The class labels for the training data.
            discrete: list, optional
-               List of indices or names of discrete features. If None, all features are treated as continuous.
+               List of indices (If is a numpy array) or names (If it is a dataFrame) of discrete features. If None, all features are treated as continuous.
            correction: str, optional
                Type of correction to apply for discrete features. Options are 'laplace' or 'm-estimate'.
            m: float, optional
@@ -63,7 +63,7 @@ class GaussianNB:
                         total = full_counts.sum()
                         probs = full_counts / total if total > 0 else np.zeros_like(full_counts, dtype=float)
                     elif correction == 'laplace':
-                        probs = (full_counts + 1) / (full_counts.sum() + len(self.classes))
+                        probs = (full_counts + 1) / (full_counts.sum() + len(expected_values))
                     elif correction == 'm-estimate':
                         probs = (full_counts + m * self.priors[c]) / (full_counts.sum() + m)
                     else:
@@ -97,7 +97,7 @@ class GaussianNB:
         for c_i in range(len(self.classes)):
             for i in range(len(self.features)):
                 if i in self.discrete:
-                    posteriors[c_i] *= self.discrete_probs[(c_i, i)].get(x[i], self.discrete_probs[(c_i, i)]['default'])
+                    posteriors[c_i] *= self.discrete_probs[(c_i, i)].get(x[i], 0)
                 else:
                     mean = self.params[(c_i, i)]['mean']
                     var = self.params[(c_i, i)]['var']
