@@ -81,17 +81,21 @@ class GaussianNB:
                         'var': var
                     }
     
-    def __predict_probas_single(self,x):
+    def __predict_probas_single(self, x):
         '''
-        Predict the posterior probabilities for a single instance x.
+        Predict the posterior probabilities for a single instance.
+        
+        This method calculates the posterior probabilities for each class
+        given a single input instance `x`, using the Gaussian Naive Bayes
+        model. It handles both discrete and continuous features.
         
         Parameters
            x: array-like, shape (n_features,)
                The input instance for which to predict the posterior probabilities.
         
         Returns
-           posteriors: array-like, shape (n_classes,)s
-                The posterior probabilities for each class.
+           posteriors: array-like, shape (n_classes,)
+               The posterior probabilities for each class, normalized to sum to 1.
         '''
         posteriors = self.priors.copy()
         for c_i in range(len(self.classes)):
