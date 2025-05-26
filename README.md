@@ -44,3 +44,38 @@ El archivo `requirements.txt` contiene todos los paquetes necesarios para el cur
 Estos paquetes permiten realizar desde análisis y limpieza de datos, hasta la implementación y evaluación de modelos de machine learning y deep learning, así como la visualización y documentación interactiva de los resultados.
 
 > Recuerda activar siempre tu entorno virtual antes de trabajar y asegurarte de tener instaladas las dependencias con `pip install -r requirements.txt`.
+
+
+## 🔑 Configuración de variables de entorno para Kaggle
+
+Algunos laboratorios requieren acceso a la API de Kaggle para descargar datasets. Para esto, debes configurar una variable de entorno con la ruta a tu archivo `kaggle.json` (tu credencial secreta de Kaggle).
+
+### Linux/MacOS
+1. Descarga tu archivo `kaggle.json` desde [https://www.kaggle.com/settings](https://www.kaggle.com/settings) (sección "API").
+2. Crea una carpeta `.kaggle` en tu directorio personal (si no existe):
+   ```bash
+   mkdir -p ~/.kaggle
+   ```
+3. Copia el archivo `kaggle.json` a esa carpeta:
+   ```bash
+   cp /ruta/al/kaggle.json ~/.kaggle/
+   chmod 600 ~/.kaggle/kaggle.json
+   ```
+4. Crea un archivo `.env` en la raíz del repositorio (puedes usar `.env.example` como plantilla):
+   ```env
+   KAGGLE_CONFIG_DIR=/home/tu_usuario/.kaggle
+   ```
+   Cambia `/home/tu_usuario/` por tu ruta real de usuario.
+
+### Windows
+1. Descarga tu archivo `kaggle.json` desde [https://www.kaggle.com/settings](https://www.kaggle.com/settings) (sección "API").
+2. Crea una carpeta `.kaggle` en tu carpeta de usuario (por ejemplo, `C:\Users\tu_usuario\.kaggle`).
+3. Copia el archivo `kaggle.json` a esa carpeta.
+4. Crea un archivo `.env` en la raíz del repositorio (puedes usar `.env.example` como plantilla):
+   ```env
+   KAGGLE_CONFIG_DIR=C:\\Users\\tu_usuario\\.kaggle
+   ```
+   Cambia `tu_usuario` por tu nombre de usuario real de Windows.
+
+Esto permitirá que los scripts y notebooks accedan a la API de Kaggle de forma segura, sin exponer tu credencial en el código.
+
