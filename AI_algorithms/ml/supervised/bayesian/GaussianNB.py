@@ -1,10 +1,12 @@
 import numpy as np # type: ignore
 import pandas as pd # type: ignore
 from scipy.stats import norm # type: ignore
+from ..base import SupervisedModel
 
-class GaussianNB:
+class GaussianNB(SupervisedModel):
     
     def __init__(self):
+        self.__super().__init__(name='Gaussian Naive Bayes')
         self.classes = None
         self.features = None
         self.params = None
