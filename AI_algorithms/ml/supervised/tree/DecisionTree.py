@@ -74,39 +74,47 @@ class DecisionTree(SupervisedModel):
             self.children[value] = node
 
     class NonLeafNode(Node):
-        def __init__(self, feature, index, entropy):
+        def __init__(self, feature, index, num_elements, entropy):
             super().__init__()
             self.feature = feature
             self.index = index
             self.entropy = entropy
+            self.num_elements = num_elements
 
     class LeafNode(Node):
         def __init__(self, class_label):
             self.class_label = class_label
-
-    def fit(self, X, y):
-
-        def build_tree(X, y, default_class):
-            if len(X)==0:
-                return DecisionTree.LeafNode(default_class)
-            if len(np.unique(y)) == 1:
-                return DecisionTree.LeafNode(y[0])
-            if len(X.columns) == 0:
-                return DecisionTree.LeafNode(mode(y))
-            feat, i = choose_split(X, y)
-            root = DecisionTree.NonLeafNode(feat, i, entropy(y))
-            feature = X[feat]
-            for value in feature.unique():
-                subset_indices = feature == value
-                subset_X = X[subset_indices].drop(columns=[feat])
-                subset_y = y[subset_indices]
-                child_node = build_tree(subset_X, subset_y, mode(y))
-                root.add_child(value, child_node)
-            return root
-        
+    
+    def build_tree(self, X, y, default_class, strategy = choose_split, depth=0):
+        if len(X)==0:
+            return DecisionTree.LeafNode(default_class)
+        if len(np.unique(y)) == 1:
+            return DecisionTree.LeafNode(y[0])
+        if len(X.columns) == 0 or (self.max_depth is not None and depth == self.max_depth):
+            return DecisionTree.LeafNode(mode(y))
+        feat, i = strategy(X, y)
+        root = DecisionTree.NonLeafNode(feat, i, len(y), entropy(y))
+        feature = X[feat]
+        for value in feature.unique():
+            subset_indices = feature == value
+            subset_X = X[subset_indices].drop(columns=[feat])
+            subset_y = y[subset_indices]
+            child_node = self.build_tree(subset_X, subset_y, mode(y), strategy=strategy, depth=depth + 1)
+            root.add_child(value, child_node)
+        return root
+    
+    def custom_fit(self, X, y, strategy):
         if not isinstance(X, pd.DataFrame):
             X = pd.DataFrame(X)
-        self.tree = build_tree(X, y, mode(y))
+        if not isinstance(y, pd.Series):
+            y = pd.Series(y)
+        
+        self.tree = self.build_tree(X, y, mode(y), strategy=strategy, depth=0)
+
+    def fit(self, X, y):
+        if not isinstance(X, pd.DataFrame):
+            X = pd.DataFrame(X)
+        self.tree = self.build_tree(X, y, mode(y), depth=0)
     
     def predict(self, X):
         def traverse_tree(node, sample):
@@ -137,7 +145,7 @@ class DecisionTree(SupervisedModel):
                 label = f'Class {node.class_label}'
                 dot.node(node_id, label, fillcolor='lightgreen')
             elif isinstance(node, DecisionTree.NonLeafNode):
-                label = f'Feature {node.feature}\nEntropy: {node.entropy:.3f}'
+                label = f'Feature {node.feature}\nEntropy: {node.entropy:.3f}\nNum Samples: {node.num_elements}'
                 dot.node(node_id, label, fillcolor='lightblue')
                 for value, child in node.children.items():
                     add_nodes_edges(child, node_id, f'{value}')
