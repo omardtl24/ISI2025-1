@@ -1,0 +1,35 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+class KMeans:
+    def __init__(self, n_clusters=3, max_iter=300, tol=1e-8):
+        self.n_clusters = n_clusters
+        self.max_iter = max_iter
+        self.tol = tol
+        self.centroids = None
+
+    def fit(self, X, centroids=None, verbose=False):
+        n_samples, _ = X.shape
+        # Randomly initialize centroids
+        if centroids is None:
+            random_indices = np.random.choice(n_samples, self.n_clusters, replace=False)
+            self.centroids = X[random_indices]
+        else:
+            self.centroids = centroids
+
+        for i in range(self.max_iter):
+            # Assign clusters based on closest centroid
+            distances = np.linalg.norm(X[:, np.newaxis] - self.centroids, axis=2)
+            labels = np.argmin(distances, axis=1)
+            # Calculate new centroids
+            new_centroids = np.array([X[labels == k].mean(axis=0) for k in range(self.n_clusters)])
+            # Check for convergence
+            if np.linalg.norm(new_centroids - self.centroids) < self.tol:
+                break
+            self.centroids = new_centroids
+            if verbose: print(f"Iteration {i + 1}: Centroids updated.\n{self.centroids}")
+        if verbose: print(f"Converged after {i + 1} iterations.")
+
+    def predict(self, X):
+        distances = np.linalg.norm(X[:, np.newaxis] - self.centroids, axis=2)
+        return np.argmin(distances, axis=1)
