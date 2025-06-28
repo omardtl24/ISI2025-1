@@ -1,12 +1,26 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+def mapCentroids(centroids):
+    r = ''
+    for i, centroid in enumerate(centroids):
+        r += f'C{i + 1}: {" ".join(f"{x:8.3f}" for x in centroid)}\n'
+    return r
+
+def distancesDf(distances, labels=None):
+    import pandas as pd
+    df = pd.DataFrame(distances, columns=[f'C{i + 1}' for i in range(distances.shape[1])])
+    if labels: df['Label'] = labels
+    return df.round(3)
+    
+
 class KMeans:
-    def __init__(self, n_clusters=3, max_iter=300, tol=1e-8):
+    def __init__(self, n_clusters=3, max_iter=300, tol=1e-8, labels=None):
         self.n_clusters = n_clusters
         self.max_iter = max_iter
         self.tol = tol
         self.centroids = None
+        self.labels = labels
 
     def fit(self, X, centroids=None, verbose=False):
         n_samples, _ = X.shape
@@ -27,7 +41,10 @@ class KMeans:
             if np.linalg.norm(new_centroids - self.centroids) < self.tol:
                 break
             self.centroids = new_centroids
-            if verbose: print(f"Iteration {i + 1}: Centroids updated.\n{self.centroids}")
+            if verbose: 
+                print(f"Iteration {i + 1}")
+                print(f"Distances:\n{distancesDf(distances, self.labels)}")
+                print(f"Centroids:\n{mapCentroids(self.centroids)}\n")
         if verbose: print(f"Converged after {i + 1} iterations.")
 
     def predict(self, X):
