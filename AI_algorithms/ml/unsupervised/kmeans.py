@@ -9,12 +9,12 @@ def inertia(X, centroids):
 def mapCentroids(centroids):
     r = ''
     for i, centroid in enumerate(centroids):
-        r += f'C{i + 1}: {" ".join(f"{x:8.3f}" for x in centroid)}\n'
+        r += f'C{i}: {" ".join(f"{x:8.3f}" for x in centroid)}\n'
     return r
 
 def distancesDf(distances, labels=None):
     import pandas as pd
-    df = pd.DataFrame(distances, columns=[f'C{i + 1}' for i in range(distances.shape[1])])
+    df = pd.DataFrame(distances, columns=[f'C{i}' for i in range(distances.shape[1])])
     if labels: df['Label'] = labels
     return df.round(3)
     
