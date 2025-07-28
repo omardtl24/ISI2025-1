@@ -21,3 +21,13 @@
 
 #Windows config
 **/desktop.ini
+
+#Exam, Quices, Labs development
+**/Examen/**.ipynb
+**/Quices/**.ipynb
+**/Laboratorios/**.ipynb
+**/Practicas/**.5.ipynb
+
+#Encryption files (No needed)
+**/encrypt.py
+**/password.txt
