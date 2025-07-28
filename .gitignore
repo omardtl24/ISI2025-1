@@ -1,0 +1,33 @@
+#Udea courses grader data
+**/local
+/Laboratorios/init.py
+
+#Python cache
+**/__pycache__/
+
+#Python environment
+**/ISI-venv/
+
+#Files
+**/*.zip
+**/*.csv
+
+#Environment variables
+**/.env
+
+#Kaggle credentials
+**/kaggle.json
+**/kaggle/
+
+#Windows config
+**/desktop.ini
+
+#Exam, Quices, Labs development
+**/Examen/**.ipynb
+**/Quices/**.ipynb
+**/Laboratorios/**.ipynb
+**/Practicas/**.5.ipynb
+
+#Encryption files (No needed)
+**/encrypt.py
+**/password.txt
