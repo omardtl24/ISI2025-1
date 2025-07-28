@@ -79,3 +79,14 @@ Algunos laboratorios requieren acceso a la API de Kaggle para descargar datasets
 
 Esto permitirá que los scripts y notebooks accedan a la API de Kaggle de forma segura, sin exponer tu credencial en el código.
 
+## 🔒 Acceso a soluciones calificadas
+
+Las soluciones de los ejercicios y laboratorios que son parte de la evaluación del curso están **encriptadas** por motivos de seguridad y honestidad académica. Solo pueden ser accedidas por los estudiantes autorizados mediante una contraseña segura proporcionada por el docente.
+
+Para acceder a estas soluciones:
+- Utiliza el script `decrypt.py` incluido en el repositorio.
+- Ingresa la contraseña cuando se te solicite.
+- El script desencriptará y extraerá los archivos protegidos en las carpetas correspondientes.
+
+> **Importante:** Si no tienes la contraseña, no podrás acceder a las soluciones calificadas. El resto del contenido del repositorio (notebooks, prácticas, utilidades y ejemplos) está disponible libremente para consulta, aprendizaje y exploración.
+
