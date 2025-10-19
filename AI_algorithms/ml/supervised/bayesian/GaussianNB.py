@@ -109,6 +109,59 @@ class GaussianNB(SupervisedModel):
                     var = self.params[(c_i, i)]['var']
                     posteriors[c_i] *= norm.pdf(x[i], loc = mean, scale = np.sqrt(var))
         return posteriors / np.sum(posteriors)
+    
+    def __predict_criteria_single(self, x):
+        '''
+        Predict the posterior probabilities for a single instance.
+        
+        This method calculates the criteria for each class
+        given a single input instance `x`, using the Gaussian Naive Bayes
+        model. It handles both discrete and continuous features.
+        
+        Parameters
+           x: array-like, shape (n_features,)
+               The input instance for which to predict the posterior probabilities.
+        
+        Returns
+           posteriors: array-like, shape (n_classes,)
+               The criteria for class decision.
+        '''
+        posteriors = self.priors.copy()
+        for c_i in range(len(self.classes)):
+            for i in range(len(self.features)):
+                if i in self.discrete:
+                    posteriors[c_i] *= self.discrete_probs[(c_i, i)].get(x[i], 0)
+                else:
+                    mean = self.params[(c_i, i)]['mean']
+                    var = self.params[(c_i, i)]['var']
+                    posteriors[c_i] *= norm.pdf(x[i], loc = mean, scale = np.sqrt(var))
+        return posteriors
+    
+    def predict_criteria(self, X):
+        '''
+        Predict the criteria (Prob numerator) for each class for the given input data X.
+        
+        Parameters
+           X: array-like, shape (n_samples, n_features)
+               The input data for which to predict the posterior probabilities.
+        
+        Returns
+           posteriors: array-like, shape (n_samples, n_classes)
+                The criteria for each class for each input instance.
+        '''
+        if self.priors is None:
+            raise ValueError("Model has not been fitted yet.")
+        if isinstance(X,pd.DataFrame):
+            X = X.values
+        if X.ndim == 1:
+            X = X.reshape(1, -1)
+        if X.shape[1] != len(self.features):
+            raise ValueError("Number of features in X does not match number of features used for training.")
+        
+        posteriors = np.zeros((X.shape[0], len(self.classes)), dtype=float)
+        for i,x in enumerate(X):
+            posteriors[i] = self.__predict_criteria_single(x)
+        return posteriors
 
     def predict_proba(self, X):
         '''
